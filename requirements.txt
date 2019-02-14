@@ -1,5 +1,0 @@
-# relatives
-
-# deploy relatives
-fabric==2.4.0
-invoke==1.2.0
