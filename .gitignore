@@ -105,3 +105,8 @@ venv.bak/
 
 # IDES
 .idea/
+
+# for git commitizen
+node_modules/
+package-lock.json
+package.json
