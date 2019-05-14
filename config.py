@@ -5,6 +5,7 @@
 # storage
 AWS_ACCESS_ID = ''
 AWS_ACCESS_KEY = ''
+AWS_DEFAULT_BUCKET = ''
 
 # web
 

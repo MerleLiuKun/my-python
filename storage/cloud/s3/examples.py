@@ -1,8 +1,10 @@
+import hashlib
+from pathlib import Path
 import boto3
 from botocore.exceptions import ClientError
 import config
 
-DEFAULT_BUCKET = 'onesight-test'
+DEFAULT_BUCKET = config.AWS_DEFAULT_BUCKET
 
 s3 = boto3.client(
     's3',
@@ -61,7 +63,14 @@ def create_bucket(client, bucket_name):
     return res
 
 
-def upload_file(client, bucket, origin_file, target_name):
+def upload_file(client, bucket, origin_file, target_name=None):
+    if target_name is None:
+        p = Path(origin_file)
+        if p.exists():
+            hash_stem = hashlib.md5(p.stem.encode('utf-8')).hexdigest()
+            target_name = '/'.join([hash_stem[0:4], hash_stem[4:8], hash_stem + p.suffix])
+        else:
+            raise Exception('File not exists.')
     res = client.upload_file(
         origin_file, bucket, target_name,
         ExtraArgs={
@@ -114,7 +123,7 @@ if __name__ == '__main__':
     #     s3,
     #     test_bucket,
     #     'tt.jpg',
-    #     'test1.png'
+    #     # 'test1.png',
     # )
     # print(r)
 
