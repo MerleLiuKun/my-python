@@ -1,3 +1,7 @@
+"""
+    生成器形式
+"""
+
 import re
 import reprlib
 
@@ -10,17 +14,18 @@ class Sentence:
         self.text = text
         self.words = RE_WORD.findall(text)
 
-    def __getitem__(self, index):
-        return self.words[index]
-
-    def __len__(self):
-        return len(self.words)
-
     def __repr__(self):
         return "Sentence(%s)" % reprlib.repr(self.text)
+
+    def __iter__(self):
+        for word in self.words:
+            yield word
+
+        return
 
 
 if __name__ == "__main__":
     s = Sentence('"This is a test for sentence')
-    for word in s:
-        print(word)
+    for wd in s:
+        print(wd)
+
